@@ -2,12 +2,6 @@
 
 All notable changes to DeveloperCompanion will be documented in this file.
 
-## [0.1.12] - 2026-02-10
-
-### Bug Fixes
-
-- **Weather Widget**: Fixed CSP policy to allow connections to Open-Meteo API (api.open-meteo.com and geocoding-api.open-meteo.com)
-
 ## [0.1.11] - 2026-02-10
 
 ### Bug Fixes
