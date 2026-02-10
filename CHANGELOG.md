@@ -2,6 +2,12 @@
 
 All notable changes to DeveloperCompanion will be documented in this file.
 
+## [0.1.10] - 2026-02-10
+
+### Bug Fixes
+
+- **Update Banner**: Fixed release notes text color for light mode visibility
+
 ## [0.1.9] - 2026-02-10
 
 ### New Features
