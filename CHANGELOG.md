@@ -2,6 +2,23 @@
 
 All notable changes to DeveloperCompanion will be documented in this file.
 
+## [0.1.16] - 2026-02-13
+
+### New Features
+
+- **Synergy Auto Sync**: Added automatic day-end synchronization with API-first push, Playwright fallback, and improved sync-status handling.
+- **Worklog UX**: Expanded worklog UI components and flows for logging, scheduling, and related modal interactions.
+- **DevOps Build Workflow**: Added Git commit handling and unclean repository checks in the DevOps build process.
+
+### Improvements
+
+- **DevOps UI/Tools**: Improved DevOps tooling and interface behavior for day-to-day development workflows.
+- **Error Handling & Notifications**: Improved app-level error surfacing and notifications for operational clarity.
+
+### Documentation
+
+- Added product architect innovation planning documentation and supporting project docs.
+
 ## [0.1.12] - 2026-02-10
 
 ### Bug Fixes
