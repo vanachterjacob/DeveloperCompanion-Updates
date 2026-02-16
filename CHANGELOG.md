@@ -23,9 +23,13 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 
 - docs: update release versioning guidelines and changelog policy (23c0f61) - 2 files changed, 494 insertions(+), 56 deletions(-); areas: CHANGELOG.md, docs.
 
+### Build & Release
+
+- release: v0.1.17 (938487b) - 5 files changed, 27 insertions(+), 4 deletions(-); areas: CHANGELOG.md, package.json, src-tauri/Cargo.lock, src-tauri/Cargo.toml.
+
 ### Other Changes
 
-- Add unit tests for preSyncValidation, dayStore, timerStore, and timer utility functions (0ad63c7) - 21 files changed, 4909 insertions(+), 49 deletions(-); areas: .claude, .cursor, docs, src/services.
+- Add unit tests for preSyncValidation, dayStore, timerStore, and timer utility functions (0ad63c7) - 21 files changed, 4909 insertions(+), 49 deletions(-); areas: .claude, .cursor, .github, docs.
 
 ## [0.1.16] - 2026-02-14
 
