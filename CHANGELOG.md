@@ -4,6 +4,68 @@ All notable changes to DeveloperCompanion will be documented in this file.
 
 This changelog is generated from git tags and commit ranges, with per-commit scope and diff stats.
 
+## [0.1.19] - 2026-02-17
+
+### Release Scope
+
+- Commit range: v0.1.18..v0.1.19
+- Commits in release: 24
+
+### Features
+
+- feat: enhance CLI engine descriptions and error handling (3ffcf8f) - 5 files changed, 160 insertions(+), 16 deletions(-); areas: src-tauri/src, src/components, src/stores.
+- feat(cursor): add dependency checks and improve CLI integration in DevOps settings (bb7fd65) - 7 files changed, 293 insertions(+), 174 deletions(-); areas: src-tauri/src, src/components, src/stores.
+- feat: Enhance CLI integration and DevOps build workflow (1d487a5) - 8 files changed, 895 insertions(+), 52 deletions(-); areas: src-tauri/src, src/components, src/stores.
+- feat: Implement a build orchestration system to manage DevOps work item builds, CLI tool execution, and Git operations (6b3bf59) - 5 files changed, 126 insertions(+), 100 deletions(-); areas: src-tauri/src, src/components, src/stores.
+- feat: Add WorkItemsPanel component and synergyStore for managing DevOps work items (7b0e108) - 2 files changed, 342 insertions(+), 43 deletions(-); areas: src/components, src/stores.
+- feat: Implement build concurrency checks and improve CLI command handling in DevOps workflow (50bd5d8) - 4 files changed, 157 insertions(+), 63 deletions(-); areas: src-tauri/src, src/components, src/stores.
+- feat: Implement AI code review functionality for DevOps builds with new store, backend module, and UI components (b14ff4f) - 5 files changed, 143 insertions(+), 63 deletions(-); areas: src-tauri/src, src/components, src/stores.
+- feat: Initialize Tauri application with Rust backend for CLI tool invocation and DevOps integration, including new HTML utilities (aeea3f1) - 10 files changed, 530 insertions(+), 18 deletions(-); areas: src-tauri/src, src/services.
+- feat: Introduce a comprehensive settings store and initial DevOps features, including AI review and build orchestration (ae28888) - 5 files changed, 113 insertions(+), 4 deletions(-); areas: src/components, src/stores.
+- feat: add WorkItemDetailModal component for displaying work item details and related actions (067564f) - 1 file changed, 2 insertions(+), 1 deletion(-); areas: src/components.
+- feat: Implement AI code review functionality with LLM CLI integration and UI components for DevOps work items (a8eac68) - 8 files changed, 778 insertions(+), 53 deletions(-); areas: src-tauri/src, src/components, src/stores.
+- feat: Add core Tauri backend with AI CLI invocation and initial UI components for worklog, time tracking, and integrations (c80ca2e) - 8 files changed, 1644 insertions(+), 16 deletions(-); areas: src-tauri/src, src/components, src/stores.
+- feat: Introduce Review Panel for generating feedback build prompts from selected comments and related code (219041d) - 7 files changed, 113 insertions(+), 26 deletions(-); areas: src/components, src/stores.
+- feat: Initialize Tauri backend for agent functionality and update Vite dependency (497a968) - 2 files changed, 2 insertions(+), 15 deletions(-); areas: src-tauri/src, package.json.
+- Update Cursor model validation and options to support latest frontier models like opus-4.6 (8810a12) - 2 files changed, 22 insertions(+), 16 deletions(-); areas: src/components, src/stores.
+- Use cursor.cmd for agent invocation to prevent GUI windows (8bc898c) - 1 file changed, 44 insertions(+), 14 deletions(-); areas: src-tauri/src.
+- Add Tab key functionality (fb9cfe8) - 3 files changed, 118 insertions(+), 118 deletions(-); areas: src/components.
+
+### Fixes
+
+- fix(db): add SQLite concurrency handling to prevent locked errors (0efa9cd) - 15 files changed, 609 insertions(+), 269 deletions(-); areas: migrations, src-tauri/src, src/hooks, src/services.
+- Fix Cursor CLI failure on Windows by injecting bundled ripgrep into PATH (32ee324) - 1 file changed, 55 insertions(+), 2 deletions(-); areas: src-tauri/src.
+
+### Refactoring
+
+- refactor: move dependency markdown generation to backend (83ed52b) - 6 files changed, 30 insertions(+), 61 deletions(-); areas: src-tauri/src, src/components.
+- refactor: replace custom JSON comment stripper with json_comments (3bf2a01) - 3 files changed, 11 insertions(+), 52 deletions(-); areas: src-tauri/src.
+
+### Documentation
+
+- docs: add release documentation checklist and improve AI review (a8c8178) - 9 files changed, 775 insertions(+), 106 deletions(-); areas: docs, src-tauri/src.
+
+### Build & Release
+
+- chore(gitignore): ignore scraped issue content (2b6f58f) - 2 files changed, 4 insertions(+), 1558 deletions(-); areas: .gitignore, synergyData.
+
+## [0.1.18] - 2026-02-16
+
+### Release Scope
+
+- Commit range: v0.1.17..v0.1.18
+- Commits in release: 4
+
+### Documentation
+
+- docs: enhance installation troubleshooting and update customer scraper logic (bd8d675) - 10 files changed, 158 insertions(+), 51 deletions(-); areas: docs, scripts, src/components, src/hooks.
+- docs: update README and wiki sync workflow (cbe5497) - 7 files changed, 121 insertions(+), 23 deletions(-); areas: .github, README.md, docs, src/components.
+
+### Build & Release
+
+- release: v0.1.18 (e5bd66a) - 5 files changed, 9 insertions(+), 5 deletions(-); areas: CHANGELOG.md, package.json, src-tauri/Cargo.lock, src-tauri/Cargo.toml.
+- chore: add .editorconfig and husky pre-commit hook for security checks (e0cdd7f) - 11 files changed, 431 insertions(+), 17 deletions(-); areas: .ai, .claude, .cursor, .editorconfig.
+
 ## [0.1.17] - 2026-02-16
 
 ### Release Scope
