@@ -4,6 +4,46 @@ All notable changes to DeveloperCompanion will be documented in this file.
 
 This changelog is generated from git tags and commit ranges, with per-commit scope and diff stats.
 
+
+## [0.1.22] - 2026-02-19
+
+### Release Scope
+
+- Commit range: v0.1.21..v0.1.22
+- Commits in release: 23
+
+### Features
+
+- feat: implement Synergy sync improvements (issue #15) (bb13e77) - 5 files changed, 336 insertions(+), 143 deletions(-); areas: src/components, src/services, src/stores.
+- feat: add multiple notification sound options and fix rust backend compilation (ac1d117) - 7 files changed, 136 insertions(+), 76 deletions(-); areas: migrations, src-tauri/src, src/App.tsx, src/components.
+- feat: move StatsHeaderBar to sidebar and stretch across 2 columns in wide mode (5ca7584) - 2 files changed, 12 insertions(+), 27 deletions(-); areas: src/App.tsx, src/stores.
+- feat: implement individual timeline item visibility and compact dashboard layout (75c516d) - 10 files changed, 469 insertions(+), 128 deletions(-); areas: migrations, src-tauri/src, src/App.tsx, src/components.
+- feat: add Synergy login link to settings and fix accidental truncation (7992351) - 1 file changed, 912 insertions(+), 1300 deletions(-); areas: src/components.
+- feat: hide timeline in minimalist mode (a631fe0) - 1 file changed, 1 insertion(+), 1 deletion(-); areas: src/App.tsx.
+- feat: implement Minimalist Mode (DevOps + Synergy Calendar only) (09c2945) - 4 files changed, 379 insertions(+), 305 deletions(-); areas: src/App.tsx, src/components, src/stores.
+- feat: restructure settings menu with sidebar navigation (308797b) - 1 file changed, 879 insertions(+), 1285 deletions(-); areas: src/components.
+- feat: enhance retro theme, add boot sequence UI, and fix widget visibility easter eggs (315d17c) - 6 files changed, 233 insertions(+), 25 deletions(-); areas: index.html, src/App.tsx, src/index.css, src/stores.
+
+### Fixes
+
+- Fix DevOps work item sync freeze and finalize DevOps settings updates (f446a93) - 7 files changed, 1065 insertions(+), 1129 deletions(-); areas: src/components, src/services, src/stores.
+- Fix Synergy API push mode to avoid Playwright fallback (66c5413) - 3 files changed, 202 insertions(+), 66 deletions(-); areas: src/components, src/services.
+- fix: resolve stale closure causing 'All entries already synced' on confirm push (9e1bf4a) - 1 file changed, 4 insertions(+), 2 deletions(-); areas: src/components.
+- fix: make playNotificationBeep more robust for short retro sounds (6903d8b) - 1 file changed, 15 insertions(+), 8 deletions(-); areas: src/utils.
+- fix: ensure priority and other missing columns exist regardless of migration state (20ae16f) - 1 file changed, 62 insertions(+), 86 deletions(-); areas: src/services.
+- fix: ensure etag column exists on devops_work_items regardless of migration state (c601ee8) - 1 file changed, 8 insertions(+), 10 deletions(-); areas: src/services.
+- fix: ensure synergy columns exist on devops_project_mappings regardless of migration state (43c26d8) - 2 files changed, 31 insertions(+), 15 deletions(-); areas: migrations, src/services.
+- fix: register migration 044 in Rust and ensure organizations are seeded and loaded during bootstrap (e6909f3) - 5 files changed, 21 insertions(+), 18 deletions(-); areas: src-tauri/src, src/App.tsx, src/hooks, src/services.
+- fix: update seeded devops organizations to correct list (escbvba, cascade4nav, etc.) (40bde4f) - 3 files changed, 13 insertions(+), 4 deletions(-); areas: migrations, src/components, src/stores.
+- fix: restore missing synergy login settings and re-add minimalist mode toggle (59f0581) - 1 file changed, 1300 insertions(+), 893 deletions(-); areas: src/components.
+
+### Other Changes
+
+- Simplify todo UX, improve timeline toggle, and persist DevOps work item URLs (61146a0) - 13 files changed, 1633 insertions(+), 394 deletions(-); areas: migrations, src-tauri/src, src/App.tsx, src/components.
+- Merge branch 'feature/synergy-sync-improvements' into main (86a86fa) - 7 files changed, 542 insertions(+), 211 deletions(-); areas: (no file changes).
+- style: move minimalist mode toggle to appearance settings tab (34bf1e5) - 1 file changed, 14 insertions(+), 14 deletions(-); areas: src/components.
+- Stop dev server when starting client (29da89f) - 2 files changed, 12 insertions(+), 6 deletions(-); areas: package.json, scripts.
+
 ## [0.1.21] - 2026-02-19
 
 ### Release Scope
