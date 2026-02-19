@@ -4,12 +4,27 @@ All notable changes to DeveloperCompanion will be documented in this file.
 
 This changelog is generated from git tags and commit ranges, with per-commit scope and diff stats.
 
+## [0.1.21] - 2026-02-19
+
+### Release Scope
+
+- Commit range: v0.1.20..v0.1.21
+- Commits in release: 2
+
+### Refactoring
+
+- refactor: minor code cleanup in synergy components (43f41b6) - 2 files changed, 1 insertion(+), 2 deletions(-); areas: src/components, src/stores.
+
+### Build & Release
+
+- release: v0.1.21 (2a1a3b2) - 4 files changed, 4 insertions(+), 4 deletions(-); areas: package.json, src-tauri/Cargo.lock, src-tauri/Cargo.toml, src-tauri/tauri.conf.json.
+
 ## [0.1.20] - 2026-02-19
 
 ### Release Scope
 
 - Commit range: v0.1.19..v0.1.20
-- Commits in release: 18
+- Commits in release: 19
 
 ### Features
 
@@ -37,6 +52,7 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 
 ### Build & Release
 
+- release: v0.1.20 (1bc6bb7) - 4 files changed, 71 insertions(+), 24 deletions(-); areas: CHANGELOG.md, package.json, src-tauri/Cargo.toml, src-tauri/tauri.conf.json.
 - chore: tussentijdse commit (5e8b03c) - 35 files changed, 3046 insertions(+), 686 deletions(-); areas: .claude, .cursor, docs, package.json.
 - chore(scripts): add dev lifecycle and client start commands (4c066f6) - 7 files changed, 168 insertions(+); areas: package.json, scripts.
 
