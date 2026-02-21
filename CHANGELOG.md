@@ -4,6 +4,37 @@ All notable changes to DeveloperCompanion will be documented in this file.
 
 This changelog is generated from git tags and commit ranges, with per-commit scope and diff stats.
 
+## [0.1.23] - 2026-02-21
+
+### Release Scope
+
+- Commit range: v0.1.22..v0.1.23
+- Commits in release: 8
+
+### Features
+
+- feat: Add LLM-powered bulk import functionality and comprehensive application features, services, and utilities for work logging, scheduling, DevOps, Synergy integration, and UI elements. (a3416ab)
+- feat: Add core Tauri backend with AI CLI invocation and auto-updater integration. (005ab0f)
+- feat: support comma decimal separator in all time input forms (91cbe03)
+- feat(activity): add default emoji icons for categories (69daf16)
+
+### Fixes
+
+- fix(issues): Address issue 22 and 23 via parsing tweaks and prompt tmpfile (a2312a3)
+- fix(#25): resolve synergy API push 404 returning meaningless errors (49d9591)
+- fix(#23): pipe CLI prompts via stdin to avoid Windows batch file argument corruption (this release)
+- fix(#23): robust LLM output JSON parser with ANSI stripping, thinking block removal, and multi-strategy extraction (this release)
+
+### Other Changes
+
+- Add explicit substep labels (5963675)
+- Clarify REST API deliverable warning (7221c37)
+
+### Documentation
+
+- docs: update FEATURES_DETAILED.md with all 5 CLI engines and stdin piping architecture
+- docs: update CLAUDE.md with CLI Engine Integration section
+- docs: update bulk-import-plan.md with resolved issues and stdin piping pattern
 
 ## [0.1.22] - 2026-02-19
 
