@@ -4,6 +4,45 @@ All notable changes to DeveloperCompanion will be documented in this file.
 
 This changelog is generated from git tags and commit ranges, with per-commit scope and diff stats.
 
+## [Unreleased]
+
+## [0.2.6] - 2026-03-03
+
+### Features
+
+- feat(synergy): add archive retry — edit and re-push synced entries from the archive view, with failed entry badge and retry button in form view
+- feat(devops): stream live CLI output during builds — Claude and Kimi engines now use `stream-json` output format for real-time progress (tool calls, file reads/writes, thinking phases) instead of showing "Initializing" until completion
+- feat(devops): add build retention & purge — configurable retention period (1-365 days, default 30) in DevOps settings, "Purge old builds" and "Purge failed builds" buttons in the Build Dashboard, and a recency filter (All / 1D / 7D / 30D) for the build queue
+
+### Improvements
+
+- refactor(settings): move Activities and About into dedicated settings tabs — remove standalone modals/buttons from header, add separator + new sidebar items at bottom, update CommandPalette and guided tour references
+- chore(cli): refresh static model lists for all CLI engines — add latest Cursor models (gpt-5.3-codex, composer-1.5, kimi-k2.5, etc.), remove defunct models (o4-mini, o3, gemini-2.0-flash), add `kimi` prefix validation
+- test(cli): add `verify-cli-models.sh` smoke-test script for validating CLI engine + model combinations
+- ux(stats): simplify StatsHeaderBar layout — remove retro uptime/corp tag, fix narrow-column layout using column-first flex instead of viewport-based breakpoints
+- ux(devops): include work item title in saved plan filename for easier identification
+- ux(devops): auto-calculate start time as (now − duration) when filling in duration in the Log Time dialog
+- ux(devops): rename "AI Plan" tab to "AI Assist" with clearer descriptions — buttons now say "Generate AC & Subtasks" and "Review AC Quality" with helper text and tooltips explaining what each action does and which LLM is used
+- ux(devops): extract "Save Plan" as standalone button in modal header — no longer buried inside the AI Assist tab; accessible from any tab with collapsible folder config
+
+### Fixes
+
+- fix(synergy): process API push entries sequentially to prevent duplicate/missing entries caused by concurrent Synergy API race conditions
+- fix(cli): use stdin for cursor engine prompt — prevents Windows OS error 206 when work item prompts with images and description exceed the 32K command-line limit
+- fix(cli): add `cursor agent` subcommand and SDK fallback to build_orchestrator and ai_review — resolves "cursor-agent not found" on systems where only `cursor agent` subcommand exists (Cursor 2.5+)
+- fix(cli): limit Cursor CLI model list to Claude-only models — `cursor agent` uses Claude Agent SDK so non-Claude models (GPT, Gemini, Grok, etc.) return 404
+- fix(devops): apply state filter client-side so the state dropdown always shows all available states instead of disappearing after selection
+- fix(synergy): prevent false-positive customer matching in fuzzy lookup — no longer returns first partial LIKE/FTS result when no strict boundary match exists
+- fix(devops): populate `startedAt` from build progress event so elapsed timer and progress bar work during active builds
+- fix(cli): add `--verbose` flag for Claude/Kimi `stream-json` output — required by latest Claude CLI when combined with `--print`
+- fix(activities): capture event values before state updater to prevent `currentTarget` null error when adding/editing activities
+- fix(devops): prune stale work items after sync — items no longer matching the WIQL query (e.g. reassigned) are removed from local DB, preserving items referenced by worklogs or todos
+- fix(cli): use bare command names as fallback so Windows resolves .exe/.cmd/.bat via PATHEXT — fixes "program not found" for CLI engines installed as native binaries instead of npm shims
+- fix(synergy): use GET with query params for token endpoint
+- fix(day): auto-close stale previous day instead of blocking new day start
+- fix(wizard): run scrapers sequentially to prevent "another scraper running" error
+- fix(tour): suppress chapter tips after user skips guided tour
+
 ## [0.2.5] - 2026-03-01
 
 ### Release Scope
