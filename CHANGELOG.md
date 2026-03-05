@@ -6,6 +6,12 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 
 ## [Unreleased]
 
+## [0.2.10] - 2026-03-05
+
+### Fixes
+
+- fix(ci): keep tauri release artifacts on default target path by skipping developer target-dir overrides in GitHub Actions
+
 ## [0.2.9] - 2026-03-05
 
 ### Fixes
