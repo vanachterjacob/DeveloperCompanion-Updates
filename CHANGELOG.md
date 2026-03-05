@@ -6,6 +6,79 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 
 ## [Unreleased]
 
+## [0.2.9] - 2026-03-05
+
+### Fixes
+
+- fix(ci): restore stable Playwright CI concurrency
+- fix(git): resolve git executable path on Windows when not on PATH — adds fallback to common install locations via `git_command()` helper
+- fix(devops): URL-decode Azure DevOps remote URL segments for correct project matching (spaces in project names)
+
+## [0.2.8] - 2026-03-05
+
+### Features
+
+- feat(ui): add copy plan button and functionality in WorkItemDetailModal
+
+### Improvements
+
+- perf(ci): speed up release e2e tests
+
+### Fixes
+
+- fix(e2e): use `.first()` for duplicate "ignoring event" log assertion in onboarding test (strict mode violation)
+- fix(e2e): increase timeout for scraper failure state recovery assertion to reduce flakiness
+- fix(test): align test types with current settings and activity unions
+
+## [0.2.7] - 2026-03-05
+
+### Features
+
+- feat(ui): add per-widget ErrorBoundary with compact fallback UI and retry capability — prevents single widget crash from taking down the dashboard
+
+### Improvements
+
+- refactor(logging): replace ~200 bare console calls across 46 files with structured logger module (`src/utils/logger.ts`) — single debug toggle via localStorage, removes 5 ad-hoc `DEBUG_*` flags
+- refactor(devops): consolidate duplicate WIQL query builders into shared `wiqlBuilder.ts` utility with 16 edge-case tests
+- chore(dev): unify Rust build target dir across all scripts — `dev-env.mjs`, `clean-dev.ps1`, `start-client.ps1`, and `build-portable.ps1` now consistently use `target/` instead of `cargo-target/`, preventing duplicate 10 GB build caches; add lightweight `clean:rust:cache` command and per-drive free-space reporting
+- chore(dev): route Tauri/Rust build output and Playwright caches through a shared machine-aware dev path (`DEVELOPERCOMPANION_DEV_ROOT`, `D:\DevTools`, or LocalAppData fallback) and harden Windows dev scripts for machines with limited `PATH` resolution
+- chore(dev): add artifact-aware cleanup commands that stop dev processes first and can purge temp files, app-data backups, Synergy artifacts, and legacy Playwright caches
+- chore(lint): enforce `no-console: "error"` ESLint rule across all source files to prevent bare console regression
+- chore(ci): add category-based Vitest coverage thresholds and `@vitest/coverage-v8` dependency
+
+### Fixes
+
+- fix(devops): skip etag cache for project groups containing new work item IDs — prevents 304 Not Modified from hiding newly created items (e.g. User Stories) during sync
+- fix(e2e): align perf-instrumentation test tokens with actual logger output format (`[perf:module]` not `[perf][module]`) and enable debug logging via localStorage seed
+- fix(synergy): fix customer ID lookup that returned null — handle array response from Customer API and search by CustomerCode, extract with correct keys instead of reusing request ID extractor
+- fix(synergy): block PACK-\* urenpakket projects from API push with clear error message instead of cryptic 404
+- fix(synergy): allow editing synced entries by clearing linked workflow request ID on sync reset, preventing locked-entry deadlock
+- fix(worklog): allow deleting synced calendar entries locally from the read-only dialog without removing the registration in Synergy
+- fix(devops): remove premature `deferredLoadWorkItemsRequested` reset that prevented work items from loading after first sync — placeholder fetch buttons now populate the list correctly
+- fix(db): restore original migration 001 content modified by test commit — prevents startup panic from checksum mismatch
+- fix(synergy): save Synergy IDs to `linked_workflow_request_id` after API push to prevent duplicate entries on retry
+- fix(synergy): explicitly set `conflictResolution: overwrite` in retry mode to allow updating existing entries via API
+- fix(devops): chunk stale work item reference checks to avoid SQLite 999 parameter limit on large databases
+- fix(devops): move state filtering back to SQL query for significant performance improvement on large datasets
+- fix(devops): maintain full state list in multi-select dropdown by fetching unique states in a separate optimized query
+- fix(worklog): remove fragile 50ms timeout in update logic, improving reliability of store synchronization
+
+### Refactoring
+
+- refactor(worklog): decompose WorkLogPanel (2,605 lines) into focused sub-components — FormView, EntryCard, LabMenu, AddEntryForm, EntryEditForm, synergyPushActions/Utils — all under 400 lines
+- refactor(worklog): decompose WorkLogCalendar (2,619 lines) into focused sub-components — CalendarGrid, DayCell, EntryBlock, useCalendarData, useCalendarHandlers, parseWorkflowDetails — all under 400 lines
+- refactor(setup): decompose SetupWizardModal (2,317 lines) into focused step components each under 400 lines
+
+### Tests
+
+- test(regression): add regression tests for decomposed WorkLogPanel, WorkLogCalendar, and SetupWizardModal sub-components
+- test(regression): implement SQLite migration path test suite verifying 50+ migrations, version ordering, and data preservation
+- test(regression): implement Synergy RSS sync state machine test suite covering all 7 stages and 3 error recovery paths
+- test(regression): implement background DB lease concurrency test suite verifying lock/release serialization and expiry recovery
+- test(regression): implement timer reconciliation test suite verifying pause/resume accuracy, clock drift handling, and manual override priority
+- test(coverage): add comprehensive test suites for 15 Zustand stores, 8 services, 2 utilities, and 4 panel components — closing coverage gaps across stores, services, and UI layers
+- chore(deps): install `better-sqlite3` and `@vitest/coverage-v8` for high-fidelity database integration testing
+
 ## [0.2.6] - 2026-03-03
 
 ### Features
@@ -67,7 +140,7 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 
 ### Build & Release
 
-- release: v0.2.4 (d97f4dd) - 15 files changed, 37 insertions(+), 22 deletions(-); areas: CHANGELOG.md, docs, package-lock.json, package.json; top files: CHANGELOG.md, docs/prompts/README.md, docs/prompts/_template.md.
+- release: v0.2.4 (d97f4dd) - 15 files changed, 37 insertions(+), 22 deletions(-); areas: CHANGELOG.md, docs, package-lock.json, package.json; top files: CHANGELOG.md, docs/prompts/README.md, docs/prompts/\_template.md.
 
 ## [0.2.3] - 2026-03-01
 
@@ -82,7 +155,7 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 
 ### Build & Release
 
-- release: v0.2.3 (a34de97) - 15 files changed, 37 insertions(+), 22 deletions(-); areas: CHANGELOG.md, docs, package-lock.json, package.json; top files: CHANGELOG.md, docs/prompts/README.md, docs/prompts/_template.md.
+- release: v0.2.3 (a34de97) - 15 files changed, 37 insertions(+), 22 deletions(-); areas: CHANGELOG.md, docs, package-lock.json, package.json; top files: CHANGELOG.md, docs/prompts/README.md, docs/prompts/\_template.md.
 
 ## [0.2.2] - 2026-03-01
 
@@ -97,7 +170,7 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 
 ### Build & Release
 
-- release: v0.2.2 (df4fb53) - 15 files changed, 743 insertions(+), 722 deletions(-); areas: CHANGELOG.md, docs, package-lock.json, package.json; top files: CHANGELOG.md, docs/prompts/README.md, docs/prompts/_template.md.
+- release: v0.2.2 (df4fb53) - 15 files changed, 743 insertions(+), 722 deletions(-); areas: CHANGELOG.md, docs, package-lock.json, package.json; top files: CHANGELOG.md, docs/prompts/README.md, docs/prompts/\_template.md.
 
 ## [0.2.1] - 2026-03-01
 
@@ -112,7 +185,7 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 
 ### Build & Release
 
-- release: v0.2.1 (f89567a) - 15 files changed, 352 insertions(+), 42 deletions(-); areas: CHANGELOG.md, docs, package-lock.json, package.json; top files: CHANGELOG.md, docs/prompts/README.md, docs/prompts/_template.md.
+- release: v0.2.1 (f89567a) - 15 files changed, 352 insertions(+), 42 deletions(-); areas: CHANGELOG.md, docs, package-lock.json, package.json; top files: CHANGELOG.md, docs/prompts/README.md, docs/prompts/\_template.md.
 
 ## [0.2.0] - 2026-03-01
 
@@ -135,9 +208,9 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 - feat(03-03): add AI tab to WorkItemDetailModal (36bebbd) - 1 file changed, 26 insertions(+), 3 deletions(-); areas: src/features; top files: src/features/devops/components/WorkItemDetailModal.tsx.
 - feat(03-03): wire elaboration store to LLM calls and create AI tab UI components (a9b90ac) - 4 files changed, 515 insertions(+), 22 deletions(-); areas: src/features, src/stores; top files: src/features/devops/components/ElaborationResults.tsx, src/features/devops/components/ElaborationTab.tsx, src/features/devops/components/SubtaskChecklist.tsx.
 - feat(03-01): create elaboration Zustand store (17380f0) - 1 file changed, 406 insertions(+); areas: src/stores; top files: src/stores/elaborationStore.ts.
-- feat(03-02): add elaboration prompt builders with TDD tests (ede6987) - 2 files changed, 409 insertions(+); areas: src/features; top files: src/features/devops/services/__tests__/elaborationPrompts.test.ts, src/features/devops/services/elaborationPrompts.ts.
+- feat(03-02): add elaboration prompt builders with TDD tests (ede6987) - 2 files changed, 409 insertions(+); areas: src/features; top files: src/features/devops/services/**tests**/elaborationPrompts.test.ts, src/features/devops/services/elaborationPrompts.ts.
 - feat(03-01): add Rust Tauri commands for DevOps write-back (0fc83e5) - 2 files changed, 149 insertions(+); areas: src-tauri/src; top files: src-tauri/src/devops_api.rs, src-tauri/src/lib.rs.
-- feat(03-02): add elaboration parser with TDD tests (3c28fbe) - 2 files changed, 400 insertions(+); areas: src/features; top files: src/features/devops/services/__tests__/elaborationParser.test.ts, src/features/devops/services/elaborationParser.ts.
+- feat(03-02): add elaboration parser with TDD tests (3c28fbe) - 2 files changed, 400 insertions(+); areas: src/features; top files: src/features/devops/services/**tests**/elaborationParser.test.ts, src/features/devops/services/elaborationParser.ts.
 - feat(03-01): create elaboration type definitions (6065407) - 1 file changed, 45 insertions(+); areas: src/types; top files: src/types/elaboration.ts.
 - feat(02-03): add AI Provider section to LLM tab in SettingsButton (ff07ba5) - 1 file changed, 444 insertions(+), 288 deletions(-); areas: src/components; top files: src/components/modals/SettingsButton.tsx.
 - feat(02-01): branch llmService.ts on llmMode for API vs CLI dispatch (5ba116a) - 1 file changed, 25 insertions(+); areas: src/services; top files: src/services/llm/llmService.ts.
@@ -194,16 +267,16 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 - test: expand phase 3 coverage and tune devops search (f1391ae) - 11 files changed, 557 insertions(+), 21 deletions(-); areas: CHANGELOG.md, src/features, src/stores, tests; top files: CHANGELOG.md, src/features/devops/components/WorkItemsPanel.tsx, src/stores/dayStore.test.ts.
 - test(e2e): stabilize day ci flow and quarantine pause hang (1d14a60) - 3 files changed, 48 insertions(+), 26 deletions(-); areas: CHANGELOG.md, tests; top files: CHANGELOG.md, tests/e2e/day.spec.ts, tests/e2e/fixtures/pageUtils.ts.
 - test(e2e): expand mock coverage and failure paths (5fa5025) - 16 files changed, 2686 insertions(+), 89 deletions(-); areas: CHANGELOG.md, tests; top files: CHANGELOG.md, tests/e2e/background-tasks.spec.ts, tests/e2e/command-palette.spec.ts.
-- test(devops): update commit tracking expectations for atomic sync writes (352c941) - 1 file changed, 30 insertions(+), 5 deletions(-); areas: src/stores; top files: src/stores/__tests__/devopsStore.commitTracking.test.ts.
+- test(devops): update commit tracking expectations for atomic sync writes (352c941) - 1 file changed, 30 insertions(+), 5 deletions(-); areas: src/stores; top files: src/stores/**tests**/devopsStore.commitTracking.test.ts.
 - test: Fix remaining flake in E2E tests for a11y tab navigation and worklog time input (d4db294) - 3 files changed, 35 insertions(+), 10 deletions(-); areas: tests; top files: tests/e2e/a11y.spec.ts, tests/e2e/fixtures/tauriMock.ts, tests/e2e/worklog.spec.ts.
 - test: stabilize e2e start-day setup and tauri sql mock (50b4f9d) - 3 files changed, 29 insertions(+), 28 deletions(-); areas: tests; top files: tests/e2e/core.spec.ts, tests/e2e/fixtures/pageUtils.ts, tests/e2e/fixtures/tauriMock.ts.
 - test: Implement E2E specs for Settings, Day Management, and Synergy (Phase 2-4) (2f4919b) - 17 files changed, 4963 insertions(+), 56 deletions(-); areas: tests; top files: tests/e2e/a11y.spec.ts, tests/e2e/core.spec.ts, tests/e2e/day.spec.ts.
 - test: Implement Work Log CRUD and E2E Utilities (9317cd4) - 10 files changed, 137 insertions(+), 771 deletions(-); areas: docs, tests; top files: docs/E2E_TESTING_GUIDE.md, tests/e2e/fixtures/pageUtils.ts, tests/e2e/worklog.spec.ts.
-- test: Fix Tauri mocking and E2E Playwright stability - Strengthened Tauri IPC mock in core.spec.ts to bypass required tauri checks - Mocked SQL metadata (PRAGMA, _sqlx_migrations) so database migration scripts don't hang - Disabled Setup Wizard and Guided Tour via mock DB entries and local storage injection - Accelerated tests by mocking the Synergy Artifact fetching phase and skipping network lookups - Fixed a duplicate main element ID (main-content) in App.tsx for more reliable Playwright locators (c99b835) - 6 files changed, 511 insertions(+), 9 deletions(-); areas: .gitignore, package-lock.json, package.json, playwright.config.ts; top files: .gitignore, package.json, playwright.config.ts.
+- test: Fix Tauri mocking and E2E Playwright stability - Strengthened Tauri IPC mock in core.spec.ts to bypass required tauri checks - Mocked SQL metadata (PRAGMA, \_sqlx_migrations) so database migration scripts don't hang - Disabled Setup Wizard and Guided Tour via mock DB entries and local storage injection - Accelerated tests by mocking the Synergy Artifact fetching phase and skipping network lookups - Fixed a duplicate main element ID (main-content) in App.tsx for more reliable Playwright locators (c99b835) - 6 files changed, 511 insertions(+), 9 deletions(-); areas: .gitignore, package-lock.json, package.json, playwright.config.ts; top files: .gitignore, package.json, playwright.config.ts.
 
 ### Refactoring
 
-- refactor(03-03): extract shared CLI output cleaning to cleanCliOutput utility (4cc5b10) - 4 files changed, 66 insertions(+), 17 deletions(-); areas: src/features, src/services; top files: src/features/devops/services/__tests__/elaborationParser.test.ts, src/features/devops/services/elaborationParser.ts, src/features/worklog/services/bulkImport/cliService.ts.
+- refactor(03-03): extract shared CLI output cleaning to cleanCliOutput utility (4cc5b10) - 4 files changed, 66 insertions(+), 17 deletions(-); areas: src/features, src/services; top files: src/features/devops/services/**tests**/elaborationParser.test.ts, src/features/devops/services/elaborationParser.ts, src/features/worklog/services/bulkImport/cliService.ts.
 - refactor: clean up code formatting and improve readability in background_tasks, discovery, ai, and backup modules (6215c37) - 4 files changed, 165 insertions(+), 102 deletions(-); areas: src-tauri/src; top files: src-tauri/src/background_tasks.rs, src-tauri/src/cli/discovery.rs, src-tauri/src/commands/ai.rs.
 - refactor(WorkLogCalendar): remove open hours calculation and related logic (c3a5074) - 1 file changed, 2 insertions(+), 20 deletions(-); areas: src/features; top files: src/features/worklog/components/WorkLogCalendar.tsx.
 - Refactor Codex CLI path resolution on Windows and enhance error handling in Setup Wizard (6ac0eae) - 5 files changed, 79 insertions(+), 22 deletions(-); areas: src-tauri/src, src/components, tests; top files: src-tauri/src/cli/discovery.rs, src/components/modals/SetupWizardModal.tsx, tests/e2e/news-summaries.spec.ts.
@@ -269,14 +342,14 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 - docs: save product architect run output for 2026-02-28 (f7ff00c) - 1 file changed, 274 insertions(+); areas: docs; top files: docs/prompts/runs/2026-02-28-product-architect.md.
 - docs: run product-architect prompt and update execution history (24f8822) - 2 files changed, 5 insertions(+), 3 deletions(-); areas: docs; top files: docs/prompts/README.md, docs/prompts/product-architect-prompt.md.
 - docs: add prompt execution tracking to library (d351f92) - 1 file changed, 16 insertions(+); areas: docs; top files: docs/prompts/README.md.
-- docs: organize and refresh project prompt library (8348359) - 9 files changed, 798 insertions(+), 5 deletions(-); areas: docs; top files: docs/product-architect-prompt.md, docs/prompts/README.md, docs/prompts/_template.md.
+- docs: organize and refresh project prompt library (8348359) - 9 files changed, 798 insertions(+), 5 deletions(-); areas: docs; top files: docs/product-architect-prompt.md, docs/prompts/README.md, docs/prompts/\_template.md.
 - Update project documentation (92f9347) - 25 files changed, 1039 insertions(+), 152 deletions(-); areas: CHANGELOG.md, README.md, docs, scripts; top files: CHANGELOG.md, README.md, docs/FEATURES_DETAILED.md.
 - docs: Add Playwright end-to-end testing guides and Tauri mocking documentation (e3d1e7b) - 2 files changed, 123 insertions(+); areas: docs; top files: docs/E2E_TESTING_GUIDE.md, docs/TAURI_MOCKING_ARCHITECTURE.md.
 - docs: Document E2E Playwright testing and Tauri mocking fixes (57ac614) - 1 file changed, 33 insertions(+); areas: .cursor; top files: .cursor/plans/2026-02-22-tauri-playwright-e2e-fixes.md.
 
 ### Build & Release
 
-- release: v0.2.0 (859c48d) - 14 files changed, 793 insertions(+), 113 deletions(-); areas: CHANGELOG.md, docs, package.json, src-tauri/Cargo.lock; top files: CHANGELOG.md, docs/prompts/README.md, docs/prompts/_template.md.
+- release: v0.2.0 (859c48d) - 14 files changed, 793 insertions(+), 113 deletions(-); areas: CHANGELOG.md, docs, package.json, src-tauri/Cargo.lock; top files: CHANGELOG.md, docs/prompts/README.md, docs/prompts/\_template.md.
 - chore: complete v0.2.0 Production Release milestone (531eb8d) - 37 files changed, 431 insertions(+), 167 deletions(-); areas: .planning, CHANGELOG.md; top files: .planning/MILESTONES.md, .planning/PROJECT.md, .planning/REQUIREMENTS.md.
 - chore(05-01): add test:e2e:stable script for parallel no-retry execution (e2edd51) - 1 file changed, 1 insertion(+); areas: package.json; top files: package.json.
 - chore: complete v0.1 milestone — archive phases 1-2, evolve planning docs (39f2a4a) - 32 files changed, 347 insertions(+), 230 deletions(-); areas: .planning, CHANGELOG.md; top files: .planning/MILESTONES.md, .planning/PROJECT.md, .planning/REQUIREMENTS.md.
@@ -586,7 +659,7 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 ### Features
 
 - feat: enhance WorkLogCalendar with loading state and animations (e3ad112) - 3 files changed, 43 insertions(+), 9 deletions(-); areas: src/components, tailwind.config.cjs; top files: src/components/worklog/WorkLogCalendar.tsx, src/components/worklog/WorkLogCalendarBlock.tsx, tailwind.config.cjs.
-- feat: enhance DevOpsToolsModal and work item title detection (77b5fb8) - 3 files changed, 46 insertions(+), 3 deletions(-); areas: src/components, src/services; top files: src/components/devops/DevOpsToolsModal.tsx, src/services/devops/__tests__/workItemService.test.ts, src/services/devops/workItemService.ts.
+- feat: enhance DevOpsToolsModal and work item title detection (77b5fb8) - 3 files changed, 46 insertions(+), 3 deletions(-); areas: src/components, src/services; top files: src/components/devops/DevOpsToolsModal.tsx, src/services/devops/**tests**/workItemService.test.ts, src/services/devops/workItemService.ts.
 - feat: update settings and enhance CLI model handling (b05c25d) - 15 files changed, 413 insertions(+), 146 deletions(-); areas: index.html, package-lock.json, src-tauri/src, src/App.tsx; top files: index.html, src-tauri/src/build_orchestrator.rs, src-tauri/src/lib.rs.
 
 ### Build & Release
@@ -679,7 +752,7 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 
 - feat: integrate local commit scanning and enhance work item link management (18f3e86) - 17 files changed, 1906 insertions(+), 119 deletions(-); areas: migrations, src-tauri/src, src/components, src/services; top files: migrations/036_devops_work_item_links.sql, src-tauri/src/al_search.rs, src-tauri/src/db/migrations.rs.
 - feat: enhance security and sanitization across components (ca11c2f) - 16 files changed, 488 insertions(+), 119 deletions(-); areas: src-tauri/src, src/components, src/services, src/stores; top files: src-tauri/src/secure_storage.rs, src/components/devops/DevOpsToolsModal.tsx, src/components/devops/WorkItemDetailModal.tsx.
-- feat: Implement upgrade work item filtering and enhance project mapping logic (d037c6b) - 8 files changed, 247 insertions(+), 41 deletions(-); areas: src/components, src/index.css, src/services, src/stores; top files: src/components/devops/WorkItemsPanel.tsx, src/index.css, src/services/devops/__tests__/projectMappingKey.test.ts.
+- feat: Implement upgrade work item filtering and enhance project mapping logic (d037c6b) - 8 files changed, 247 insertions(+), 41 deletions(-); areas: src/components, src/index.css, src/services, src/stores; top files: src/components/devops/WorkItemsPanel.tsx, src/index.css, src/services/devops/**tests**/projectMappingKey.test.ts.
 - feat: Update button styles for improved UI consistency and accessibility (a0dbbdf) - 6 files changed, 17 insertions(+), 11 deletions(-); areas: src/components, src/utils; top files: src/components/devops/BuildAnalyticsPanel.tsx, src/components/devops/DevOpsToolsModal.tsx, src/components/devops/WorkItemDetailModal.tsx.
 - feat: Enhance UI settings with density modes, reduced motion toggle, and date/time preferences (3454938) - 14 files changed, 914 insertions(+), 37 deletions(-); areas: src/components, src/hooks, src/index.css, src/stores; top files: src/components/common/Toast.tsx, src/components/modals/SettingsButton.tsx, src/components/worklog/WorkLogBlockDialog.tsx.
 - feat: add retro theme option and update theme handling logic (e089d94) - 4 files changed, 261 insertions(+), 4 deletions(-); areas: src/components, src/hooks, src/index.css, src/stores; top files: src/components/modals/SettingsButton.tsx, src/hooks/useApplyTheme.ts, src/index.css.
@@ -927,14 +1000,14 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 - feat: QA review phase 1 - enhance App component with bootstrap error handling and UI feedback (a8534fa) - 35 files changed, 708 insertions(+), 811 deletions(-); areas: .github, AGENTS.md, docs, src-tauri/src; top files: .github/workflows/release.yml, AGENTS.md, docs/SYNERGY_OPEN_REGISTRATION_PATCH_REPORT.md.
 - feat: add QA Audit Bug & Edge Case Report for Developer Companion (fc0e527) - 1 file changed, 231 insertions(+); areas: .cursor; top files: .cursor/plans/2026-02-11-qa-audit-bug-edge-case-report.md.
 - feat: enhance WorkLogCalendar with loading state and animations (e3ad112) - 3 files changed, 43 insertions(+), 9 deletions(-); areas: src/components, tailwind.config.cjs; top files: src/components/worklog/WorkLogCalendar.tsx, src/components/worklog/WorkLogCalendarBlock.tsx, tailwind.config.cjs.
-- feat: enhance DevOpsToolsModal and work item title detection (77b5fb8) - 3 files changed, 46 insertions(+), 3 deletions(-); areas: src/components, src/services; top files: src/components/devops/DevOpsToolsModal.tsx, src/services/devops/__tests__/workItemService.test.ts, src/services/devops/workItemService.ts.
+- feat: enhance DevOpsToolsModal and work item title detection (77b5fb8) - 3 files changed, 46 insertions(+), 3 deletions(-); areas: src/components, src/services; top files: src/components/devops/DevOpsToolsModal.tsx, src/services/devops/**tests**/workItemService.test.ts, src/services/devops/workItemService.ts.
 - feat: update settings and enhance CLI model handling (b05c25d) - 15 files changed, 413 insertions(+), 146 deletions(-); areas: index.html, package-lock.json, src-tauri/src, src/App.tsx; top files: index.html, src-tauri/src/build_orchestrator.rs, src-tauri/src/lib.rs.
 - feat: enhance work log and synergy integration (8c27657) - 45 files changed, 3518 insertions(+), 433 deletions(-); areas: docs, migrations, package-lock.json, src-tauri/src; top files: docs/FEATURES_DETAILED.md, docs/IMPROVEMENTS.md, docs/SYNERGY_OPEN_REGISTRATION_PATCH_REPORT.md.
 - feat: implement weather proxy and enhance weather data fetching (5eda6c4) - 3 files changed, 161 insertions(+), 39 deletions(-); areas: src-tauri/src, src/services; top files: src-tauri/src/lib.rs, src-tauri/src/weather.rs, src/services/weather.ts.
 - feat: enhance weather widget and modal with location settings and geocoding support (25f2c83) - 7 files changed, 605 insertions(+), 118 deletions(-); areas: migrations, package-lock.json, src-tauri/src, src/components; top files: migrations/037_weather_location_settings.sql, src-tauri/src/db/migrations.rs, src/components/common/WeatherWidget.tsx.
 - feat: integrate local commit scanning and enhance work item link management (18f3e86) - 17 files changed, 1906 insertions(+), 119 deletions(-); areas: migrations, src-tauri/src, src/components, src/services; top files: migrations/036_devops_work_item_links.sql, src-tauri/src/al_search.rs, src-tauri/src/db/migrations.rs.
 - feat: enhance security and sanitization across components (ca11c2f) - 16 files changed, 488 insertions(+), 119 deletions(-); areas: src-tauri/src, src/components, src/services, src/stores; top files: src-tauri/src/secure_storage.rs, src/components/devops/DevOpsToolsModal.tsx, src/components/devops/WorkItemDetailModal.tsx.
-- feat: Implement upgrade work item filtering and enhance project mapping logic (d037c6b) - 8 files changed, 247 insertions(+), 41 deletions(-); areas: src/components, src/index.css, src/services, src/stores; top files: src/components/devops/WorkItemsPanel.tsx, src/index.css, src/services/devops/__tests__/projectMappingKey.test.ts.
+- feat: Implement upgrade work item filtering and enhance project mapping logic (d037c6b) - 8 files changed, 247 insertions(+), 41 deletions(-); areas: src/components, src/index.css, src/services, src/stores; top files: src/components/devops/WorkItemsPanel.tsx, src/index.css, src/services/devops/**tests**/projectMappingKey.test.ts.
 - feat: Update button styles for improved UI consistency and accessibility (a0dbbdf) - 6 files changed, 17 insertions(+), 11 deletions(-); areas: src/components, src/utils; top files: src/components/devops/BuildAnalyticsPanel.tsx, src/components/devops/DevOpsToolsModal.tsx, src/components/devops/WorkItemDetailModal.tsx.
 - feat: Enhance UI settings with density modes, reduced motion toggle, and date/time preferences (3454938) - 14 files changed, 914 insertions(+), 37 deletions(-); areas: src/components, src/hooks, src/index.css, src/stores; top files: src/components/common/Toast.tsx, src/components/modals/SettingsButton.tsx, src/components/worklog/WorkLogBlockDialog.tsx.
 - feat: add retro theme option and update theme handling logic (e089d94) - 4 files changed, 261 insertions(+), 4 deletions(-); areas: src/components, src/hooks, src/index.css, src/stores; top files: src/components/modals/SettingsButton.tsx, src/hooks/useApplyTheme.ts, src/index.css.
@@ -1068,12 +1141,12 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 - test: expand phase 3 coverage and tune devops search (f1391ae) - 11 files changed, 557 insertions(+), 21 deletions(-); areas: CHANGELOG.md, src/features, src/stores, tests; top files: CHANGELOG.md, src/features/devops/components/WorkItemsPanel.tsx, src/stores/dayStore.test.ts.
 - test(e2e): stabilize day ci flow and quarantine pause hang (1d14a60) - 3 files changed, 48 insertions(+), 26 deletions(-); areas: CHANGELOG.md, tests; top files: CHANGELOG.md, tests/e2e/day.spec.ts, tests/e2e/fixtures/pageUtils.ts.
 - test(e2e): expand mock coverage and failure paths (5fa5025) - 16 files changed, 2686 insertions(+), 89 deletions(-); areas: CHANGELOG.md, tests; top files: CHANGELOG.md, tests/e2e/background-tasks.spec.ts, tests/e2e/command-palette.spec.ts.
-- test(devops): update commit tracking expectations for atomic sync writes (352c941) - 1 file changed, 30 insertions(+), 5 deletions(-); areas: src/stores; top files: src/stores/__tests__/devopsStore.commitTracking.test.ts.
+- test(devops): update commit tracking expectations for atomic sync writes (352c941) - 1 file changed, 30 insertions(+), 5 deletions(-); areas: src/stores; top files: src/stores/**tests**/devopsStore.commitTracking.test.ts.
 - test: Fix remaining flake in E2E tests for a11y tab navigation and worklog time input (d4db294) - 3 files changed, 35 insertions(+), 10 deletions(-); areas: tests; top files: tests/e2e/a11y.spec.ts, tests/e2e/fixtures/tauriMock.ts, tests/e2e/worklog.spec.ts.
 - test: stabilize e2e start-day setup and tauri sql mock (50b4f9d) - 3 files changed, 29 insertions(+), 28 deletions(-); areas: tests; top files: tests/e2e/core.spec.ts, tests/e2e/fixtures/pageUtils.ts, tests/e2e/fixtures/tauriMock.ts.
 - test: Implement E2E specs for Settings, Day Management, and Synergy (Phase 2-4) (2f4919b) - 17 files changed, 4963 insertions(+), 56 deletions(-); areas: tests; top files: tests/e2e/a11y.spec.ts, tests/e2e/core.spec.ts, tests/e2e/day.spec.ts.
 - test: Implement Work Log CRUD and E2E Utilities (9317cd4) - 10 files changed, 137 insertions(+), 771 deletions(-); areas: docs, tests; top files: docs/E2E_TESTING_GUIDE.md, tests/e2e/fixtures/pageUtils.ts, tests/e2e/worklog.spec.ts.
-- test: Fix Tauri mocking and E2E Playwright stability - Strengthened Tauri IPC mock in core.spec.ts to bypass required tauri checks - Mocked SQL metadata (PRAGMA, _sqlx_migrations) so database migration scripts don't hang - Disabled Setup Wizard and Guided Tour via mock DB entries and local storage injection - Accelerated tests by mocking the Synergy Artifact fetching phase and skipping network lookups - Fixed a duplicate main element ID (main-content) in App.tsx for more reliable Playwright locators (c99b835) - 6 files changed, 511 insertions(+), 9 deletions(-); areas: .gitignore, package-lock.json, package.json, playwright.config.ts; top files: .gitignore, package.json, playwright.config.ts.
+- test: Fix Tauri mocking and E2E Playwright stability - Strengthened Tauri IPC mock in core.spec.ts to bypass required tauri checks - Mocked SQL metadata (PRAGMA, \_sqlx_migrations) so database migration scripts don't hang - Disabled Setup Wizard and Guided Tour via mock DB entries and local storage injection - Accelerated tests by mocking the Synergy Artifact fetching phase and skipping network lookups - Fixed a duplicate main element ID (main-content) in App.tsx for more reliable Playwright locators (c99b835) - 6 files changed, 511 insertions(+), 9 deletions(-); areas: .gitignore, package-lock.json, package.json, playwright.config.ts; top files: .gitignore, package.json, playwright.config.ts.
 
 ### Refactoring
 
@@ -1131,7 +1204,7 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 - docs: save product architect run output for 2026-02-28 (f7ff00c) - 1 file changed, 274 insertions(+); areas: docs; top files: docs/prompts/runs/2026-02-28-product-architect.md.
 - docs: run product-architect prompt and update execution history (24f8822) - 2 files changed, 5 insertions(+), 3 deletions(-); areas: docs; top files: docs/prompts/README.md, docs/prompts/product-architect-prompt.md.
 - docs: add prompt execution tracking to library (d351f92) - 1 file changed, 16 insertions(+); areas: docs; top files: docs/prompts/README.md.
-- docs: organize and refresh project prompt library (8348359) - 9 files changed, 798 insertions(+), 5 deletions(-); areas: docs; top files: docs/product-architect-prompt.md, docs/prompts/README.md, docs/prompts/_template.md.
+- docs: organize and refresh project prompt library (8348359) - 9 files changed, 798 insertions(+), 5 deletions(-); areas: docs; top files: docs/product-architect-prompt.md, docs/prompts/README.md, docs/prompts/\_template.md.
 - Update project documentation (92f9347) - 25 files changed, 1039 insertions(+), 152 deletions(-); areas: CHANGELOG.md, README.md, docs, scripts; top files: CHANGELOG.md, README.md, docs/FEATURES_DETAILED.md.
 - docs: Add Playwright end-to-end testing guides and Tauri mocking documentation (e3d1e7b) - 2 files changed, 123 insertions(+); areas: docs; top files: docs/E2E_TESTING_GUIDE.md, docs/TAURI_MOCKING_ARCHITECTURE.md.
 - docs: Document E2E Playwright testing and Tauri mocking fixes (57ac614) - 1 file changed, 33 insertions(+); areas: .cursor; top files: .cursor/plans/2026-02-22-tauri-playwright-e2e-fixes.md.
