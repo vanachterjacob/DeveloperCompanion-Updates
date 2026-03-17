@@ -6,6 +6,12 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-03-17
+
+### Fixes
+
+- fix(db): remove unknown migration records on startup to prevent crash when dev builds apply newer migrations than the installed production binary knows about
+
 ## [0.3.0] - 2026-03-17
 
 ### Features
