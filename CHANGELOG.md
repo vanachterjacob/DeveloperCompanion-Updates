@@ -6,6 +6,71 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-03-17
+
+### Features
+
+- feat(devops): add AI elaboration workflow — Elaborate with AI, Review AC Quality, Export as Cursor Plan, batch elaboration with cross-item dependency detection
+- feat(devops): batch export plans to user-selected folder via directory picker instead of fixed .cursor/plans/
+- feat(ui): add Studio Ops theme with OKLCH tinted neutrals, warm copper accent, and Plus Jakarta Sans typography
+- feat(theme): finalize Retro/Studio theme token coverage (`--media-accent`, `--cal-grid-line`, `--tour-overlay-bg`) and standardize visual variables across timelines, sliders, and overlay surfaces
+- feat(layout): add responsive sidebar drawer for narrow viewports (<1440px) with slide-out overlay and hamburger toggle
+- feat(skills): add `/dc-review` and `/dc-a11y` project-specific skills adapted from agency-agents prompt library
+
+### Improvements
+
+- a11y(ui): add ARIA tablist/tab/tabpanel roles to WorkLogPanel tabs, `MotionConfig reducedMotion="user"` for global reduced-motion support, `role="progressbar"` on update download bar, `aria-live` on timer status and calendar loading, `focus-visible` ring on 20+ buttons, and `aria-hidden` on decorative SVGs across 10 components
+- perf(bundle): reduce JS bundle by 18.6% (2101→1710 KB) — replace react-markdown with marked, remove zod, extract CHANGELOG at build time, lazy-load CommandPalette and canvas-confetti, switch to Terser minifier
+- perf(db): optimize SQLite queries in worklog/synergy stores — add 7 indexes (composite, covering, expression), batch RSS upserts into single transaction, normalize WHERE clauses for index usage
+- perf(ui): reduce unnecessary App re-renders with Zustand `useShallow`, memo dependency reduction, and visibility-aware update intervals in timeline/clock hot paths
+- perf(ui): add React.memo and granular Zustand selectors across 8 components to reduce unnecessary re-renders
+- perf(ui): extract CommandPalette SVG icons into shared memoized constants to reduce repeated JSX creation and improve render stability
+- perf(ui): lazy-load modals, add manual chunking, non-blocking fonts, and memo EntryCard
+- perf(news): wrap NewsArticleCard in React.memo and stabilize summary effect to prevent redundant LLM calls
+- perf(ci): split release workflow into Linux pre-check and Windows build jobs for fail-fast validation
+- perf(ci): add Rust and Playwright caching, path filters, and remove duplicate E2E tests from release workflow
+- refactor(ui): migrate remaining 14 modals to shared Dialog component with ARIA, focus trapping, and Escape handling
+- refactor(ui): consolidate App modal visibility state into a single modal object and simplify widget callback flow
+- refactor(ui): extract shared Spinner, InlineError, and expanded EmptyState components, replacing ad-hoc patterns in ~35 files
+- refactor(ui): normalize framer-motion imports through Animations wrapper and remove unused animation components
+- refactor(ui): extract legendDefaults and fix all fast-refresh warnings
+- ux(synergy): split day headers and week total into realized vs draft hours so unsynced work is visible at a glance
+- ux(synergy): add distinct colors per calendar entry type (absence, internal planning, imported appointment, PSA open/realized) in Synergy workflow calendar views
+- ux(devops): consolidate work item modal buttons into AI Assist tab, reducing header clutter from 6 buttons to 2
+- ux(devops): keep AI elaboration grounded in work item source context, suppress heuristic code hints for structured items
+- ux(layout): enable inline sidebar toggling on widescreen views and update responsive drawer button behavior
+- ux(splash): make splash screen theme-aware with per-theme text, colors, and early localStorage read to prevent retro flash
+- ux(studio): add time-of-day greeting with user's first name in Studio theme header
+- ux(ui): translate all Dutch UI text to English across ~20 files (~60 strings)
+- ux(ui): polish overlays, easing, and accents — replace pure-black overlays with tinted zinc-950, switch edit-mode accent from blue to amber, use GPU-accelerated scaleX for progress bars, apply exponential easing to modals/toasts/drawer
+- ux(schedule): clamp end-time input, show timeline with calendar blocks, warn when all activities are disabled
+- ux(settings): show CLI-specific login instructions in auth error messages instead of generic text
+- chore(ci): switch release workflow to self-hosted runner
+- chore(ci): change CI triggers from every push to release tags + manual only, saving GitHub Actions minutes
+
+### Fixes
+
+- fix(synergy): immediately exclude orphaned synced entries from hour totals using synchronous calendar cross-check, eliminating stale-data flash on week navigation
+- fix(synergy): prevent calendar from loading indefinitely by fixing spawn/close race condition and clearing loading state before detail enrichment
+- fix(synergy): resolve Playwright Firefox auto-install failure on installed builds by setting NODE_PATH and using absolute cli.js path
+- fix(a11y): resolve all 16 jsx-a11y ESLint errors — add keyboard listeners, ARIA roles, replace autoFocus with ref-based focus, convert non-interactive elements to native buttons across 9 components
+- fix(ui): complete remaining accessibility defects from the quality audit — add missing ARIA state attributes, replace title-only semantic cues with aria labels
+- fix(ui): make timeline and modal controls more robust by increasing small-touch targets, improving status contrast
+- fix(ui): harden inputs, error boundaries, and text overflow across 12 components — add maxLength limits, input validation, retry caps, scroll lock on dialogs
+- fix(layout): replace calc-based fixed height formulas with flexbox/viewport-safe layouts in calendar, worklog, devops, diff, and modal flows
+- fix(hooks): prevent listener leaks on fast unmount in ScraperSection, BackgroundTasksPanel, useScraperProgress, and quick-capture
+- fix(hooks): move useMemo before early returns to satisfy React hooks rules
+- fix(cleanup): add proper timer cleanup on unmount in 5 components
+- fix(async): add proper error handling to 28 async boundaries across 11 files
+- fix(news): resolve 403 from SiteGround-hosted feeds by sending browser-like HTTP/2 requests with full headers and compression
+- fix(devops): prevent UI freeze on Save Plan and Copy Plan by moving blocking I/O off the main thread
+- fix(devops): add missing filters.states dependency to useMemo in WorkItemsPanel
+- fix(devops): add retry on LLM parse failure in batch elaboration to recover from sporadic non-JSON responses
+- fix(devops): normalize work-item filters and refresh state multi-select results to prevent `trim()` crashes
+- fix(ai): remove unsupported `--dangerously-skip-permissions` flag from Cursor CLI engine
+- fix(weather): fix fog emoji rendering on Windows by replacing 🌫️ with ☁️
+- fix(schedule): prevent infinite auto-generate retry loop when buildDayPlan produces 0 items
+
 ## [0.2.10] - 2026-03-05
 
 ### Fixes
