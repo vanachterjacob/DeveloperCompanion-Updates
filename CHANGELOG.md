@@ -6,6 +6,16 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 
 ## [Unreleased]
 
+## [0.3.2] - 2026-03-17
+
+### Fixes
+
+- fix(synergy): show Cal/Form/Timers view-mode tabs in minimalist mode instead of forcing calendar-only view (#41)
+- fix(schedule): add "Regenerate now" banner in Settings > Activities when toggling activities during an active day (#42)
+- fix(ui): use viewport-relative height for calendar container so it fills available screen space (#43)
+- fix(synergy): auto-fill customer from project via DB lookup fallback, fix accent-insensitive customer matching with NFD normalization (#44)
+- fix(db): drop unused PII columns (city, email, country, type, status) from synergy_customers table and remove stale column references (#44)
+
 ## [0.3.1] - 2026-03-17
 
 ### Fixes
