@@ -6,6 +6,24 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 
 ## [Unreleased]
 
+## [0.3.3] - 2026-03-18
+
+### Features
+
+- feat(devops): add inline status change dropdown on work items — fetches allowed states from DevOps API with clear permission error feedback
+- feat(devops): add "Mark Completed" button for cancelled/failed builds and stale build detection warning after 3 min inactivity
+
+### Improvements
+
+- ux(devops): simplify the work item overview with customer grouping, item IDs before titles, and calmer row styling
+- chore(settings): change default branch prefix from JVA to DEV
+
+### Fixes
+
+- fix(ui): ensure toast notifications render above modal dialogs in light theme
+- fix(synergy): keep Bulk and Arch view-mode tabs visible in minimalist mode
+- fix(ui): make Work Log calendar slot height truly responsive to remaining panel space, including timeline collapse/expand changes, while keeping a minimum half-hour block height
+
 ## [0.3.2] - 2026-03-17
 
 ### Fixes
