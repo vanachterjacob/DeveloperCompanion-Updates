@@ -6,6 +6,34 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 
 ## [Unreleased]
 
+## [0.3.4] - 2026-03-21
+
+### Features
+
+- feat(settings): add developer mode — hide all DevOps features behind an Android-style easter egg (10x tap on version in About) with GitHub issue tracking
+- feat(worklog): persist form draft in sessionStorage to survive accidental page reloads
+- feat(updater): remember dismissed update version so banner doesn't reappear after dismiss
+- feat(updater): delay install when Synergy sync is in progress to prevent data loss
+- feat(dashboard): wrap WorkLogPanel in WidgetErrorBoundary for crash isolation
+- feat(db): add periodic WAL checkpoint (every 5 min) to prevent unbounded WAL growth
+
+### Improvements
+
+- refactor(layout): harden localStorage rehydration with type/range validation for sidebar width, order, and visibility
+- ux(wizard): confirm before closing setup wizard if setup is incomplete
+- chore(hooks): version consistency check in pre-commit hook (package.json, tauri.conf.json, Cargo.toml)
+- refactor(hooks): pause visibility-aware intervals on Tauri window blur, not just document hide
+- chore(test): enforce idempotency for new migrations with known-exception allowlist
+
+### Fixes
+
+- fix(settings): hide DevOps LLM entries from settings search and command palette when developer mode is off
+- fix(ci): switch release workflow from bash to powershell on self-hosted Windows runner to fix temp script path mangling
+- fix(day): update minimum time input every minute and on tab focus instead of caching once at mount
+- fix(db): escalate schema migration column-check failures to a thrown error instead of silent warn
+- fix(db): fix transaction queue waiter decrement in finally block
+- fix(toast): catch undo callback errors and show error toast instead of crashing
+
 ## [0.3.3] - 2026-03-18
 
 ### Features
