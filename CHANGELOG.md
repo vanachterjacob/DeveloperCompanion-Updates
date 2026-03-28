@@ -6,6 +6,17 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 
 ## [Unreleased]
 
+## [0.3.5] - 2026-03-28
+
+### Features
+
+- feat(devops): add "Save as Plan" to export work items directly to .cursor/plans/ without AI elaboration, with local image download and progress bar
+- feat(devops): show plan health banner when opening a work item — indicates if a plan exists, is stale, or has missing images
+
+### Fixes
+
+- fix(synergy): resolve Playwright/scripts path in production installs (Tauri `_up_/` resource convention)
+
 ## [0.3.4] - 2026-03-21
 
 ### Features
