@@ -6,6 +6,35 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 
 ## [Unreleased]
 
+## [0.3.6] - 2026-04-10
+
+### Features
+
+- feat(dev): add prerequisite check scripts (`check-prereqs.bat`/`.ps1`) for verifying Node, Rust, MSVC, WebView2, and Windows SDK before dev setup
+- feat(dev): add `setup.bat` and `start.bat` dev helper scripts for one-command environment bootstrap
+
+### Fixes
+
+- fix(security): send Synergy API token credentials via POST body instead of GET query string to prevent URL logging exposure
+- fix(security): add path validation to `open_file_in_editor` command matching other file access commands
+- fix(security): pass CI secret via `env:` instead of direct `${{ }}` interpolation in release workflow
+- fix(settings): guard `getCurrentWindow()` call with `isTauri()` to prevent crash when Settings modal opens outside Tauri webview
+- fix(layout): add `flex-wrap` to toolbar so buttons wrap instead of overflowing on narrow viewports
+- fix(layout): remove empty StatsHeaderBar wrapper div that left a phantom 24px gap when no day data exists
+- fix(devops): resolve Rust toolchain when .cargo/bin shims are missing (e.g. after Windows update)
+- fix(worklog): use consistent padding on Work Log container so it doesn't shift when switching between Cal and Form views
+- fix(dev): resolve delayed expansion bug in VS build tools detection
+- fix(ui): prevent Dialog focus-trap from stealing focus on rerender
+- fix(settings): await developer mode DB persistence before showing toast
+- fix(devops): capture `event.currentTarget.value` before async state update in PAT token input
+
+### Improvements
+
+- test(settings): fix SettingsModal and WorkLogPanel tests for developer mode gating
+- test(devops): fix DevOpsSettingsTab test unused variable
+- chore(lint): reduce eslint errors from 1092 to 0 by scoping config to app code
+- chore(security): add `.github/CODEOWNERS` for workflow and security file protection
+
 ## [0.3.5] - 2026-03-28
 
 ### Features
