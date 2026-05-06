@@ -6,6 +6,26 @@ This changelog is generated from git tags and commit ranges, with per-commit sco
 
 ## [Unreleased]
 
+## [0.3.7] - 2026-05-06
+
+### Features
+
+- feat(devops): add organization discovery functionality and UI integration
+
+### Fixes
+
+- fix(codex): repair Codex CLI integration
+
+### Improvements
+
+- refactor(devops): unify plan export into single button with folder picker
+- refactor(worklog): replace shallow `workLogFormStore` callback registry with `workLogViewStore` that owns the shared `viewMode` state — hotkey, command palette, quick-capture, and the panel itself now read from one seam instead of registering callbacks
+- refactor(llm): unify CLI engine dispatch behind one role-parameterized seam — `invokeLlm(role, prompt, options?)` and `isLlmAvailable(role)` replace the six near-identical role-specific wrappers (`invokeElaborationLlm`, `invokeNewsSummaryLlm`, etc.) and the redundant `invokeBulkImportCli`
+- refactor(schedule): introduce `dayScheduler` orchestration seam under `@/features/schedule` — `buildPlanForDay`, `replanQueueAfter`, `computeBlockAdjustments`, and `findCurrent` replace direct calls into the lower-level `planner.ts` / `scheduleReplan.ts` / `schedule.ts` utilities; the inline collision-avoidance loop in `adjustForBlocks` is now a pure, testable function
+- refactor(devops): pull cross-store lifecycle transitions into a dedicated `devopsLifecycle` module — `devopsBuildStore` and `devopsReviewStore` no longer cross-import each other or `devopsStore` directly; the selection→build and review→build hand-off points now have a single named home
+- refactor(synergy): make `@/features/synergy` the public seam for Synergy — outside-feature callers (`components/`, `hooks/`, `features/news/`) now import from the barrel instead of reaching into `services/...` directly; sub-services are explicitly internal
+- refactor(worklog): introduce `workLogRepository` as the first DB-access seam — all SQL for the `work_log_entries` table now lives in one module instead of being inlined across `workLogStore`. Establishes the Repository pattern for the rest of the stores to follow.
+
 ## [0.3.6] - 2026-04-10
 
 ### Features
