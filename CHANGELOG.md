@@ -4,7 +4,48 @@ All notable changes to DeveloperCompanion will be documented in this file.
 
 This changelog is generated from git tags and commit ranges, with per-commit scope and diff stats.
 
-## [Unreleased]
+## [0.4.0] - 2026-06-16
+
+### Features
+
+- feat(synergy): add `npm run synergy:probe:rest` — read-only probe that checks whether the tenant exposes the standard Exact Synergy REST entity services (`Exact.Entity.REST.svc`, RequestFlow) as a direct-API alternative to calendar HTML scraping; reports per endpoint the status, required auth scheme (Basic vs NTLM/Negotiate), and `$metadata` entity list
+- docs(synergy): document REST API findings (`docs/SYNERGY_REST_API_FINDINGS.md`) — the standard entity service is reachable via NTLM and exposes 292 entities incl. `CalendarList`, `Request`, `Project`, and the PSA hour/deliverable sets, opening a direct-API path to replace calendar scraping
+- feat(synergy): add read-only REST entity service client — new `fetch_synergy_rest_json` Tauri command (NTLM via WinHTTP, restricted to `/services/Exact.Entity.REST.svc/` GETs) plus a typed frontend service (`synergyRest.ts`) with OData envelope unwrapping and `$filter` helpers; probe script gains `--entity <name>` field-discovery mode
+- feat(synergy): typed API-backed calendar week fetch — `fetchSynergyRestCalendarWeekItems()` queries the `Request` entity (incl. `DeliverableCode`/`WBSLine`/`ProjectNumber`, fields previously thought to require tenant changes) with an overlap-aware date filter and maps records to calendar items; OData wall-clock date parsing covered by unit tests; ResourceID resolves automatically via the `UserInfo` entity
+- feat(synergy): REST API is now the primary calendar source — agenda weeks load directly from the Synergy entity service (exact dates, request GUIDs and numeric IDs included, no HTML parsing, no Playwright, no per-item detail-page fetches); the calendar page scraper remains as automatic fallback and can be forced via the new "Calendar source" toggle in Synergy settings
+- feat(design): "Studio Ops" premium pass — Instrument Sans display font for headings and titles paired with Plus Jakarta body; copper day-arc progress line on the active Day widget; copper current-time indicator in the work log calendar; staggered sidebar wake reveal on load and on day start
+- feat(worklog): replace calendar loading spinner with a skeleton week grid; collapse the 9-chip legend behind a "Legend & filters" toggle (default hidden)
+
+### Improvements
+
+- ui(day): "Start day" is now the primary copper CTA; disabled controls render as readable previews (opacity 0.55) instead of a grey wall; sharper empty-state copy for blocks and todos
+- ui(header): Hotkeys/AI Feed/BC Feed buttons use quiet ghost chrome (border on hover) so the header has a clear hierarchy
+- ui(timer): Pomodoro digits in JetBrains Mono at larger size; settings checkboxes use the copper accent color
+- ui(layout): flatten the sidebar — widgets sit directly on the background separated by hairlines instead of stacked cards; nested panels (special blocks) lose card-in-card chrome; the day timeline renders as a status strip; the work log calendar remains the only full panel surface
+- refactor(stores): use `toErrorMessage` for error formatting in `useSynergyStore.login` and `toastStore.triggerUndo` instead of ad-hoc `instanceof Error` checks
+- perf(react): add `useShallow` selectors to components that subscribed to entire stores (`IntegrationHealthIndicator`, `ActivitiesSettingsTab`, SetupWizard `AutomationStep`/`CoreSettingsStep`); memoize widget index lookup in `MainSidebar`; hoist static category-label map in `ActivitiesSettingsTab`
+- test(coverage): add co-located unit tests for `utils/retry` (exponential backoff, onRetry contract, exhaustion) and `services/llm/cleanCliOutput` (ANSI stripping, thinking-block removal, TextPart extraction)
+- refactor(persistence): complete the repository seam over `database.ts` — all 14 stores now call typed repository functions instead of inline SQL
+
+### Fixes
+
+- fix(theme): complete the Studio Ops blue-palette remap — info banners, scorecards, and diff/review highlights using `bg-blue-50`/`border-blue-200`/`text-blue-900`-style classes no longer escape the theme and now render with studio info colors
+- fix(theme): guard accent-button contrast — `bg-blue-500/600 text-white` buttons now keep inverse (dark) text on the light copper accent instead of inheriting the near-white `text-white` remap
+- fix(hooks): harden `useBackgroundMaintenance` tick — workspace refresh, WAL checkpoint, synergy fetch, and news fetch each catch and log their own failures; a failing stage no longer aborts the tick, emits unhandled rejections, or hot-retries every 5 seconds (due times now advance on attempt)
+- fix(worklog): eliminate the double-loading flash when switching weeks in the Synergy calendar — raw unenriched calendar items are no longer written to the week cache before detail enrichment and dedup complete; previously cached (real) entries stay visible during a background refresh instead of a skeleton or intermediate entries
+- fix(worklog): fix calendar entries rendering on top of each other — overlap detection now uses the date-aware duration for workflow items, so entries spanning midnight (stand-by shifts, multi-day absences) correctly claim their time range instead of appearing zero-length; overlap groups divide width by the number of lanes actually needed (max concurrency) instead of group size, so blocks stay as wide as possible
+- fix(schedule): `loadForDay` now clears `isLoading` on stale-load returns, preventing the schedule UI from spinning indefinitely when concurrent operations bump the load version
+- fix(schedule): `generateForDayIfEmpty` now loads existing items from the database into state when the DB already has rows, instead of silently returning with an empty UI
+- fix(security): `check_plan_health` now validates `target_dir` with traversal and boundary checks, matching `save_cursor_plan_sync` — previously allowed reading plan files outside the project tree
+- fix(security): REST path validation now rejects URL-encoded traversal sequences (`%2e%2e`) in addition to literal `..`
+- fix(security): Synergy RSS client now uses `redirect(Policy::none())` to prevent SSRF via auth-credential forwarding on redirects
+- fix(synergy): OData calendar filter now queries both planned and realized date ranges so rescheduled items are not silently dropped
+- fix(synergy): REST `ResourceID` cache now auto-invalidates when the HTTP username changes, instead of requiring an app restart
+- fix(synergy): REST calendar source returning an empty week is now treated as an authoritative result instead of triggering an unnecessary scraper fallback
+- fix(worklog): bulk import `fillCalendar` now reports partial failures with the count of successfully created entries, instead of silently leaving orphaned rows
+- fix(devops): feedback detection during sync now includes the "test" state (previously only "in test"/"testing"/"ready for test"), matching the UI's `detectFeedbackStatus`
+- fix(devops): build-readiness path comparison now normalizes paths (case, separators, trailing slash) to prevent `C:\Repo` vs `C:\Repo\` mismatches
+- fix(devops): `ensureBulkImportDayId` now uses `INSERT OR IGNORE` to prevent constraint errors on concurrent day creation
 
 ## [0.3.7] - 2026-05-06
 
